@@ -1,0 +1,16 @@
+{
+  "name": "4Ever Wedding",
+  "short_name": "4Ever",
+  "description": "La vostra app per organizzare il matrimonio con semplicità.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f8f5ef",
+  "theme_color": "#6d7762",
+  "orientation": "portrait-primary",
+  "lang": "it",
+  "icons": [
+    { "src": "/app-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

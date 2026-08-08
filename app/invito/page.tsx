@@ -95,7 +95,12 @@ export default function InvitoPage() {
         </div>
         <div className={styles.storyGrid}>
           <figure className={styles.photoLarge}>
-            <div><span>La vostra fotografia</span><small>Formato verticale</small></div>
+            <img
+              src="/invito/giada-francesco-storia-01.jpeg"
+              alt="Giada e Francesco insieme durante un volo in elicottero"
+              width="1193"
+              height="1600"
+            />
           </figure>
           <div className={styles.storyText}>
             <span className={styles.flower}>❀</span>

@@ -95,6 +95,43 @@
 .addressLink:hover, .addressLink:focus-visible { color: #2f566c; text-decoration-color: currentColor; outline: none; }
 .addressLink span { color: #a78c25; font-size: 15px; line-height: 1; text-decoration: none; }
 .programNote { text-align: center; font-size: 23px; font-style: italic; color: var(--soft-ink); }
+.album { padding: clamp(75px, 10vw, 130px) 20px; background: #fffdf8; position: relative; }
+.album::before, .album::after { content: "✦"; position: absolute; color: var(--yellow); opacity: .65; font-size: 50px; }
+.album::before { left: 7%; top: 11%; }
+.album::after { right: 8%; bottom: 9%; font-size: 34px; }
+.albumCard { width: min(820px, 100%); margin: auto; padding: clamp(30px, 7vw, 70px); border: 1px solid rgba(82,111,130,.18); border-radius: 34px; background: linear-gradient(155deg, rgba(243,237,221,.72), rgba(237,245,248,.8)); box-shadow: 0 24px 70px rgba(57,75,79,.09); }
+.albumCard .sectionHeading { margin: 0 auto 24px; text-align: center; }
+.albumCard .sectionHeading h2 { font-size: clamp(39px, 6vw, 68px); }
+.albumIntro { max-width: 650px; margin: 0 auto 38px; text-align: center; color: var(--soft-ink); font-size: clamp(19px, 2.4vw, 24px); line-height: 1.55; }
+.cameraIcon { width: 96px; height: 70px; margin: 0 auto 30px; border: 2px solid var(--blue-dark); border-radius: 16px; position: relative; color: var(--blue-dark); }
+.cameraIcon::before { content: ""; position: absolute; left: 18px; top: -13px; width: 34px; height: 14px; border: 2px solid var(--blue-dark); border-bottom: 0; border-radius: 8px 8px 0 0; background: #eef4f4; }
+.cameraIcon::after { content: ""; position: absolute; right: 12px; top: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); }
+.cameraIcon span { position: absolute; left: 50%; top: 50%; width: 38px; height: 38px; border: 2px solid var(--blue-dark); border-radius: 50%; transform: translate(-50%,-50%); }
+.cameraIcon span::after { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: rgba(143,174,193,.48); }
+.cameraIcon i { position: absolute; left: 10px; bottom: -14px; width: 28px; height: 22px; border-radius: 50%; background: rgba(239,216,132,.6); z-index: -1; }
+.albumForm { display: grid; gap: 22px; }
+.albumField { display: grid; gap: 8px; color: var(--blue-dark); font: 600 12px Arial, sans-serif; letter-spacing: .8px; }
+.albumField em { font: italic 14px "Cormorant Garamond", serif; letter-spacing: 0; color: var(--soft-ink); }
+.albumField input { width: 100%; border: 1px solid rgba(82,111,130,.28); border-radius: 12px; padding: 14px 16px; background: rgba(255,255,255,.72); color: var(--ink); font: 18px "Cormorant Garamond", serif; outline: 0; }
+.albumField input:focus { border-color: var(--blue-dark); box-shadow: 0 0 0 3px rgba(143,174,193,.18); }
+.fileChooser { display: grid; place-items: center; gap: 10px; padding: 27px 16px; border: 1px dashed rgba(82,111,130,.5); border-radius: 18px; background: rgba(255,255,255,.5); text-align: center; }
+.fileChooser label, .albumSubmit { display: inline-flex; min-height: 50px; align-items: center; justify-content: center; border: 0; border-radius: 999px; padding: 0 24px; background: var(--blue-dark); color: white; cursor: pointer; font: 600 12px Arial, sans-serif; letter-spacing: 1.2px; transition: background .2s, transform .2s; }
+.fileChooser label:hover, .fileChooser label:focus-visible, .albumSubmit:hover, .albumSubmit:focus-visible { background: #3f6074; transform: translateY(-1px); outline: none; }
+.fileChooser small { color: var(--soft-ink); font-size: 15px; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.fileList { display: grid; gap: 10px; }
+.fileList h3 { margin: 2px 0 3px; font: 400 23px "Italiana", serif; color: var(--blue-dark); }
+.filePreview { display: grid; grid-template-columns: 62px minmax(0,1fr) 38px; gap: 13px; align-items: center; padding: 10px; border: 1px solid rgba(82,111,130,.16); border-radius: 14px; background: rgba(255,255,255,.68); }
+.filePreview img, .filePreview video { width: 62px; height: 62px; border-radius: 10px; object-fit: cover; background: #dfe9ed; }
+.filePreview strong, .filePreview small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filePreview strong { font-size: 16px; }
+.filePreview small { margin-top: 4px; color: var(--soft-ink); }
+.filePreview button { width: 34px; height: 34px; border: 1px solid rgba(82,111,130,.3); border-radius: 50%; background: transparent; color: var(--blue-dark); cursor: pointer; font-size: 22px; }
+.filePreview button:hover, .filePreview button:focus-visible { background: #f3dfd7; outline: none; }
+.albumConsent { display: grid; grid-template-columns: 22px 1fr; gap: 11px; align-items: start; color: var(--soft-ink); font-size: 16px; line-height: 1.4; cursor: pointer; }
+.albumConsent input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--blue-dark); }
+.albumSubmit { width: 100%; }
+.albumMessage { margin: 0; padding: 18px; border: 1px solid rgba(167,140,37,.3); border-radius: 14px; background: rgba(255,247,196,.6); color: #665819; text-align: center; font-size: 17px; line-height: 1.45; }
 .rsvp { padding: clamp(70px, 10vw, 130px) 20px; background: linear-gradient(145deg, #8faec1, #718fa3); }
 .rsvpCard { width: min(760px, 100%); margin: auto; padding: clamp(30px, 7vw, 72px); border-radius: 6px; background: var(--ivory); box-shadow: 0 30px 80px rgba(28,53,65,.25); }
 .rsvpCard .sectionHeading { text-align: center; margin: 0 auto 22px; }
@@ -144,6 +181,10 @@
   .icon { width: 42px; height: 42px; }
   .timeline h3 { font-size: 23px; }
   .timeline address { font-size: 15px; }
+  .album { padding-inline: 14px; }
+  .albumCard { padding: 35px 20px; border-radius: 24px; }
+  .filePreview { grid-template-columns: 54px minmax(0,1fr) 36px; gap: 10px; }
+  .filePreview img, .filePreview video { width: 54px; height: 54px; }
   .rsvp form { grid-template-columns: 1fr; }
   .program::after { font-size: 55px; }
 }

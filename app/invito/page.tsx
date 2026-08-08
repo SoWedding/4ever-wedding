@@ -42,6 +42,8 @@ function getCountdown(): Countdown {
 export default function InvitoPage() {
   const [countdown, setCountdown] = useState<Countdown | null>(null);
   const [inviato, setInviato] = useState(false);
+  const [rsvpInCorso, setRsvpInCorso] = useState(false);
+  const [rsvpErrore, setRsvpErrore] = useState("");
   const [albumFiles, setAlbumFiles] = useState<AlbumFile[]>([]);
   const [albumMessage, setAlbumMessage] = useState("");
 
@@ -55,12 +57,42 @@ export default function InvitoPage() {
     };
   }, []);
 
-  function inviaRsvp(event: FormEvent<HTMLFormElement>) {
+  async function inviaRsvp(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const dati = Object.fromEntries(new FormData(event.currentTarget).entries());
-    localStorage.setItem("invito-giada-francesco-rsvp", JSON.stringify(dati));
-    setInviato(true);
-    event.currentTarget.reset();
+    setRsvpInCorso(true);
+    setRsvpErrore("");
+    const form = event.currentTarget;
+    const dati = new FormData(form);
+    let idempotencyKey = localStorage.getItem("invito-giada-francesco-rsvp-key");
+    if (!idempotencyKey) {
+      idempotencyKey = crypto.randomUUID();
+      localStorage.setItem("invito-giada-francesco-rsvp-key", idempotencyKey);
+    }
+
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          idempotencyKey,
+          participation: String(dati.get("partecipazione")),
+          names: String(dati.get("nomi")),
+          partySize: Number(dati.get("partecipanti")),
+          allergies: String(dati.get("allergie") ?? ""),
+          intolerances: String(dati.get("intolleranze") ?? ""),
+          specialNeeds: String(dati.get("necessita") ?? ""),
+          privacyConsent: dati.get("privacyConsent") === "on",
+        }),
+      });
+      const result = await response.json() as { error?: string };
+      if (!response.ok) throw new Error(result.error ?? "Invio non riuscito");
+      setInviato(true);
+      form.reset();
+    } catch (error) {
+      setRsvpErrore(error instanceof Error ? error.message : "Invio non riuscito. Riprovate tra poco.");
+    } finally {
+      setRsvpInCorso(false);
+    }
   }
 
   function selectAlbumFiles(event: React.ChangeEvent<HTMLInputElement>) {
@@ -201,7 +233,7 @@ export default function InvitoPage() {
           {inviato ? (
             <div className={styles.success} role="status">
               <span>✓</span><h3>Grazie!</h3>
-              <p>La risposta è stata salvata su questo dispositivo per la demo.</p>
+              <p>La vostra risposta è stata registrata e sarà visibile soltanto agli sposi.</p>
               <button type="button" onClick={() => setInviato(false)}>Invia un’altra risposta</button>
             </div>
           ) : (
@@ -218,13 +250,21 @@ export default function InvitoPage() {
                 <input name="partecipanti" type="number" min="1" max="12" defaultValue="1" required />
               </label>
               <label className={styles.field}>Allergie o intolleranze
-                <textarea name="allergie" placeholder="Indicate nomi e necessità alimentari" />
+                <textarea name="allergie" placeholder="Indicate eventuali allergie" />
+              </label>
+              <label className={styles.field}>Intolleranze
+                <textarea name="intolleranze" placeholder="Indicate eventuali intolleranze alimentari" />
               </label>
               <label className={styles.field}>Necessità particolari
                 <textarea name="necessita" placeholder="Accessibilità, seggiolone o altre attenzioni" />
               </label>
-              <button className={styles.submit} type="submit">Invia la risposta</button>
-              <small>Questa è una demo: la risposta resta salvata solo su questo dispositivo.</small>
+              <label className={styles.albumConsent}>
+                <input type="checkbox" name="privacyConsent" required />
+                <span>Acconsento al trattamento dei dati inseriti per gestire la partecipazione al matrimonio. I dati saranno visibili soltanto agli sposi e non saranno mostrati agli altri invitati.</span>
+              </label>
+              <p className={styles.privacyNote}>Informativa breve: i dati sono raccolti esclusivamente per organizzare il matrimonio, gestire presenze ed esigenze degli invitati e saranno conservati con accesso riservato agli sposi.</p>
+              <button className={styles.submit} type="submit" disabled={rsvpInCorso}>{rsvpInCorso ? "Invio in corso…" : "Invia la risposta"}</button>
+              {rsvpErrore && <p className={styles.rsvpError} role="alert">{rsvpErrore}</p>}
             </form>
           )}
         </div>

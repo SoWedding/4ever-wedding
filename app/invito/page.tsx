@@ -27,6 +27,7 @@ const INVITO = {
 };
 
 type Countdown = { giorni: number; ore: number; minuti: number; secondi: number };
+type AlbumFile = { id: string; file: File; previewUrl: string };
 
 function getCountdown(): Countdown {
   const distanza = Math.max(0, new Date(INVITO.data).getTime() - Date.now());
@@ -41,6 +42,8 @@ function getCountdown(): Countdown {
 export default function InvitoPage() {
   const [countdown, setCountdown] = useState<Countdown | null>(null);
   const [inviato, setInviato] = useState(false);
+  const [albumFiles, setAlbumFiles] = useState<AlbumFile[]>([]);
+  const [albumMessage, setAlbumMessage] = useState("");
 
   useEffect(() => {
     const aggiorna = () => setCountdown(getCountdown());
@@ -60,6 +63,40 @@ export default function InvitoPage() {
     event.currentTarget.reset();
   }
 
+  function selectAlbumFiles(event: React.ChangeEvent<HTMLInputElement>) {
+    const nuoviFile = Array.from(event.target.files ?? []).map((file, index) => ({
+      id: `${file.name}-${file.lastModified}-${index}`,
+      file,
+      previewUrl: URL.createObjectURL(file),
+    }));
+    setAlbumFiles(current => [...current, ...nuoviFile]);
+    setAlbumMessage("");
+    event.target.value = "";
+  }
+
+  function removeAlbumFile(id: string) {
+    setAlbumFiles(current => {
+      const fileDaRimuovere = current.find(item => item.id === id);
+      if (fileDaRimuovere) URL.revokeObjectURL(fileDaRimuovere.previewUrl);
+      return current.filter(item => item.id !== id);
+    });
+    setAlbumMessage("");
+  }
+
+  function submitAlbumDemo(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (albumFiles.length === 0) {
+      setAlbumMessage("Selezionate almeno una fotografia o un video prima di continuare.");
+      return;
+    }
+
+    // Nella versione definitiva questo sarà l'unico punto da collegare
+    // al servizio di archiviazione protetto e alla relativa API di upload.
+    setAlbumMessage(
+      "Modalità demo: i file non sono stati inviati né salvati. Il salvataggio online sicuro verrà attivato nella versione definitiva."
+    );
+  }
+
   return (
     <main className={styles.invito}>
       <nav className={styles.nav} aria-label="Sezioni dell'invito">
@@ -67,6 +104,7 @@ export default function InvitoPage() {
         <div>
           <a href="#storia">La nostra storia</a>
           <a href="#programma">Programma</a>
+          <a href="#album">Album</a>
           <a href="#rsvp">RSVP</a>
         </div>
       </nav>
@@ -152,10 +190,79 @@ export default function InvitoPage() {
         <p className={styles.programNote}>Non vediamo l’ora di brindare, cenare e ballare insieme a voi.</p>
       </section>
 
+      <section id="album" className={styles.album}>
+        <div className={styles.albumCard}>
+          <div className={styles.cameraIcon} aria-hidden="true">
+            <span />
+            <i />
+          </div>
+          <div className={styles.sectionHeading}>
+            <span>03</span><p>I VOSTRI RICORDI</p>
+            <h2>Il nostro album condiviso</h2>
+          </div>
+          <p className={styles.albumIntro}>
+            Aiutateci a custodire ogni istante di questo giorno. Caricate qui le fotografie e i video che realizzerete e contribuite a creare il nostro album di ricordi.
+          </p>
+
+          <form className={styles.albumForm} onSubmit={submitAlbumDemo}>
+            <label className={styles.albumField}>
+              Codice album
+              <input name="albumCode" required autoComplete="off" placeholder="Inserite il codice ricevuto" />
+            </label>
+
+            <div className={styles.fileChooser}>
+              <input
+                id="album-files"
+                className={styles.srOnly}
+                type="file"
+                accept="image/*,video/*"
+                multiple
+                onChange={selectAlbumFiles}
+              />
+              <label htmlFor="album-files">Scegli foto e video</label>
+              <small>Potete selezionare più immagini e video insieme.</small>
+            </div>
+
+            {albumFiles.length > 0 && (
+              <div className={styles.fileList} aria-live="polite">
+                <h3>File selezionati</h3>
+                {albumFiles.map(item => (
+                  <article key={item.id} className={styles.filePreview}>
+                    {item.file.type.startsWith("image/") ? (
+                      <img src={item.previewUrl} alt="" />
+                    ) : (
+                      <video src={item.previewUrl} muted preload="metadata" aria-label={`Anteprima di ${item.file.name}`} />
+                    )}
+                    <div>
+                      <strong>{item.file.name}</strong>
+                      <small>{item.file.type.startsWith("video/") ? "Video" : "Fotografia"} · {(item.file.size / 1048576).toFixed(1)} MB</small>
+                    </div>
+                    <button type="button" onClick={() => removeAlbumFile(item.id)} aria-label={`Rimuovi ${item.file.name}`}>×</button>
+                  </article>
+                ))}
+              </div>
+            )}
+
+            <label className={styles.albumField}>
+              Nome di chi condivide <em>facoltativo</em>
+              <input name="uploaderName" autoComplete="name" placeholder="Il vostro nome" />
+            </label>
+
+            <label className={styles.albumConsent}>
+              <input type="checkbox" name="consent" required />
+              <span>Acconsento al caricamento e al trattamento delle fotografie e dei video selezionati per l’album privato degli sposi.</span>
+            </label>
+
+            <button className={styles.albumSubmit} type="submit">Carica i ricordi</button>
+            {albumMessage && <p className={styles.albumMessage} role="status">{albumMessage}</p>}
+          </form>
+        </div>
+      </section>
+
       <section id="rsvp" className={styles.rsvp}>
         <div className={styles.rsvpCard}>
           <div className={styles.sectionHeading}>
-            <span>03</span><p>RÉPONDEZ S&apos;IL VOUS PLAÎT</p>
+            <span>04</span><p>RÉPONDEZ S&apos;IL VOUS PLAÎT</p>
             <h2>Ci sarete?</h2>
           </div>
           <p className={styles.rsvpIntro}>Vi chiediamo di confermare la vostra presenza compilando questo breve modulo.</p>

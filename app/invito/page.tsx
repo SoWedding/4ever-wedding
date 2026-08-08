@@ -39,9 +39,13 @@ export default function InvitoPage() {
   const [inviato, setInviato] = useState(false);
 
   useEffect(() => {
-    setCountdown(getCountdown());
-    const timer = window.setInterval(() => setCountdown(getCountdown()), 1000);
-    return () => window.clearInterval(timer);
+    const aggiorna = () => setCountdown(getCountdown());
+    const avvio = window.setTimeout(aggiorna, 0);
+    const timer = window.setInterval(aggiorna, 1000);
+    return () => {
+      window.clearTimeout(avvio);
+      window.clearInterval(timer);
+    };
   }, []);
 
   function inviaRsvp(event: FormEvent<HTMLFormElement>) {
@@ -126,7 +130,7 @@ export default function InvitoPage() {
       <section id="rsvp" className={styles.rsvp}>
         <div className={styles.rsvpCard}>
           <div className={styles.sectionHeading}>
-            <span>03</span><p>RÉPONDEZ S'IL VOUS PLAÎT</p>
+            <span>03</span><p>RÉPONDEZ S&apos;IL VOUS PLAÎT</p>
             <h2>Ci sarete?</h2>
           </div>
           <p className={styles.rsvpIntro}>Vi chiediamo di confermare la vostra presenza compilando questo breve modulo.</p>
@@ -135,7 +139,7 @@ export default function InvitoPage() {
             <div className={styles.success} role="status">
               <span>✓</span><h3>Grazie!</h3>
               <p>La risposta è stata salvata su questo dispositivo per la demo.</p>
-              <button type="button" onClick={() => setInviato(false)}>Invia un'altra risposta</button>
+              <button type="button" onClick={() => setInviato(false)}>Invia un’altra risposta</button>
             </div>
           ) : (
             <form onSubmit={inviaRsvp}>

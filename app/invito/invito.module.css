@@ -74,6 +74,7 @@
 .sectionHeading h2 { margin: 10px 0 0; color: var(--blue-dark); font: 400 clamp(44px, 7vw, 78px)/.98 "Italiana", serif; }
 .storyGrid { display: grid; grid-template-columns: minmax(250px, .8fr) 1.1fr; gap: clamp(35px, 8vw, 110px); align-items: center; max-width: 1120px; margin: auto; }
 .photoLarge, .photoSmall { margin: 0; padding: 14px; background: white; box-shadow: 0 20px 60px rgba(57,75,79,.1); transform: rotate(-2deg); }
+.photoLarge img { display: block; width: 100%; height: auto; border: 1px solid rgba(82,111,130,.14); }
 .photoLarge > div, .photoSmall > div { display: grid; place-items: center; align-content: center; min-height: 520px; border: 1px dashed rgba(82,111,130,.35); background: linear-gradient(145deg, #edf3f5, #faf5df); color: var(--blue-dark); }
 .photoSmall { margin: 42px 0 0; transform: rotate(2deg); }
 .photoSmall > div { min-height: 230px; }
@@ -131,7 +132,7 @@
   .countdown strong { font-size: 27px; }
   .countdown span { font-size: 8px; letter-spacing: .8px; }
   .storyGrid { grid-template-columns: 1fr; }
-  .photoLarge { width: min(88%, 390px); margin: auto; }
+  .photoLarge { width: min(94%, 430px); margin: auto; padding: 9px; }
   .photoLarge > div { min-height: 430px; }
   .storyText > p { text-align: center; }
   .flower { display: block; text-align: center; }

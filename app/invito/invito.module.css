@@ -91,6 +91,9 @@
 .timeline article p { margin: 0 0 6px; font: 600 10px Arial, sans-serif; letter-spacing: 3px; color: #a18622; }
 .timeline h3 { margin: 0 0 5px; font: 400 30px "Italiana", serif; }
 .timeline address { color: var(--soft-ink); font-style: normal; font-size: 17px; }
+.mapsButton { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; padding: 9px 15px; border: 1px solid rgba(82,111,130,.5); border-radius: 999px; color: var(--blue-dark); background: rgba(255,255,255,.48); text-decoration: none; font: 600 10px Arial, sans-serif; letter-spacing: 1.2px; text-transform: uppercase; transition: background .2s, color .2s, transform .2s; }
+.mapsButton:hover, .mapsButton:focus-visible { background: var(--blue-dark); color: white; transform: translateY(-1px); outline: none; }
+.mapsButton span { font-size: 15px; line-height: 1; }
 .programNote { text-align: center; font-size: 23px; font-style: italic; color: var(--soft-ink); }
 .rsvp { padding: clamp(70px, 10vw, 130px) 20px; background: linear-gradient(145deg, #8faec1, #718fa3); }
 .rsvpCard { width: min(760px, 100%); margin: auto; padding: clamp(30px, 7vw, 72px); border-radius: 6px; background: var(--ivory); box-shadow: 0 30px 80px rgba(28,53,65,.25); }

@@ -14,11 +14,15 @@ const INVITO = {
     ora: "16:00",
     luogo: "Chiesa di Santa Maria",
     indirizzo: "Piazza della Chiesa 1, Genova",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Chiesa%20di%20Santa%20Maria%2C%20Piazza%20della%20Chiesa%201%2C%20Genova",
   },
   ricevimento: {
     ora: "18:00",
     luogo: "Villa dei Limoni",
     indirizzo: "Via del Mare 24, Genova",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Villa%20dei%20Limoni%2C%20Via%20del%20Mare%2024%2C%20Genova",
   },
 };
 
@@ -121,12 +125,26 @@ export default function InvitoPage() {
           <article>
             <span className={styles.time}>{INVITO.cerimonia.ora}</span>
             <div className={styles.icon}>♡</div>
-            <div><p>CERIMONIA</p><h3>{INVITO.cerimonia.luogo}</h3><address>{INVITO.cerimonia.indirizzo}</address></div>
+            <div>
+              <p>CERIMONIA</p>
+              <h3>{INVITO.cerimonia.luogo}</h3>
+              <address>{INVITO.cerimonia.indirizzo}</address>
+              <a className={styles.mapsButton} href={INVITO.cerimonia.mapsUrl} target="_blank" rel="noopener noreferrer">
+                Apri su Maps <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </article>
           <article>
             <span className={styles.time}>{INVITO.ricevimento.ora}</span>
             <div className={styles.icon}>✦</div>
-            <div><p>RICEVIMENTO</p><h3>{INVITO.ricevimento.luogo}</h3><address>{INVITO.ricevimento.indirizzo}</address></div>
+            <div>
+              <p>RICEVIMENTO</p>
+              <h3>{INVITO.ricevimento.luogo}</h3>
+              <address>{INVITO.ricevimento.indirizzo}</address>
+              <a className={styles.mapsButton} href={INVITO.ricevimento.mapsUrl} target="_blank" rel="noopener noreferrer">
+                Apri su Maps <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </article>
         </div>
         <p className={styles.programNote}>Non vediamo l’ora di brindare, cenare e ballare insieme a voi.</p>

@@ -245,11 +245,6 @@ export default function InvitoPage() {
           </p>
 
           <form className={styles.albumForm} onSubmit={submitAlbumDemo}>
-            <label className={styles.albumField}>
-              Codice album
-              <input name="albumCode" required autoComplete="off" placeholder="Inserite il codice ricevuto" />
-            </label>
-
             <div className={styles.fileChooser}>
               <input
                 id="album-files"

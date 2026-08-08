@@ -12,17 +12,17 @@ const INVITO = {
     "Ci siamo incontrati quasi per caso, abbiamo scelto di camminare insieme e oggi desideriamo festeggiare con le persone che rendono la nostra storia ancora più bella.",
   cerimonia: {
     ora: "16:00",
-    luogo: "Chiesa di Santa Maria",
-    indirizzo: "Piazza della Chiesa 1, Genova",
+    luogo: "Chiesa di San Giovanni Bosco e San Gaetano",
+    indirizzo: "Via Carlo Rolando 15, Genova",
     mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Chiesa%20di%20Santa%20Maria%2C%20Piazza%20della%20Chiesa%201%2C%20Genova",
+      "https://www.google.com/maps/search/?api=1&query=Chiesa%20di%20San%20Giovanni%20Bosco%20e%20San%20Gaetano%2C%20Via%20Carlo%20Rolando%2015%2C%20Genova",
   },
   ricevimento: {
     ora: "18:00",
-    luogo: "Villa dei Limoni",
-    indirizzo: "Via del Mare 24, Genova",
+    luogo: "Pizzeria Moromare Foce",
+    indirizzo: "Corso Guglielmo Marconi 76R, Genova",
     mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Villa%20dei%20Limoni%2C%20Via%20del%20Mare%2024%2C%20Genova",
+      "https://www.google.com/maps/search/?api=1&query=Pizzeria%20Moromare%20Foce%2C%20Corso%20Guglielmo%20Marconi%2076R%2C%20Genova",
   },
 };
 
@@ -128,10 +128,11 @@ export default function InvitoPage() {
             <div>
               <p>CERIMONIA</p>
               <h3>{INVITO.cerimonia.luogo}</h3>
-              <address>{INVITO.cerimonia.indirizzo}</address>
-              <a className={styles.mapsButton} href={INVITO.cerimonia.mapsUrl} target="_blank" rel="noopener noreferrer">
-                Apri su Maps <span aria-hidden="true">↗</span>
-              </a>
+              <address>
+                <a className={styles.addressLink} href={INVITO.cerimonia.mapsUrl} target="_blank" rel="noopener noreferrer">
+                  {INVITO.cerimonia.indirizzo} <span aria-hidden="true">↗</span>
+                </a>
+              </address>
             </div>
           </article>
           <article>
@@ -140,10 +141,11 @@ export default function InvitoPage() {
             <div>
               <p>RICEVIMENTO</p>
               <h3>{INVITO.ricevimento.luogo}</h3>
-              <address>{INVITO.ricevimento.indirizzo}</address>
-              <a className={styles.mapsButton} href={INVITO.ricevimento.mapsUrl} target="_blank" rel="noopener noreferrer">
-                Apri su Maps <span aria-hidden="true">↗</span>
-              </a>
+              <address>
+                <a className={styles.addressLink} href={INVITO.ricevimento.mapsUrl} target="_blank" rel="noopener noreferrer">
+                  {INVITO.ricevimento.indirizzo} <span aria-hidden="true">↗</span>
+                </a>
+              </address>
             </div>
           </article>
         </div>

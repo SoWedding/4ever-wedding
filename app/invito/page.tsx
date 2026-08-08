@@ -190,6 +190,46 @@ export default function InvitoPage() {
         <p className={styles.programNote}>Non vediamo l’ora di brindare, cenare e ballare insieme a voi.</p>
       </section>
 
+      <section id="rsvp" className={styles.rsvp}>
+        <div className={styles.rsvpCard}>
+          <div className={styles.sectionHeading}>
+            <span>04</span><p>RÉPONDEZ S&apos;IL VOUS PLAÎT</p>
+            <h2>Ci sarete?</h2>
+          </div>
+          <p className={styles.rsvpIntro}>Vi chiediamo di confermare la vostra presenza compilando questo breve modulo.</p>
+
+          {inviato ? (
+            <div className={styles.success} role="status">
+              <span>✓</span><h3>Grazie!</h3>
+              <p>La risposta è stata salvata su questo dispositivo per la demo.</p>
+              <button type="button" onClick={() => setInviato(false)}>Invia un’altra risposta</button>
+            </div>
+          ) : (
+            <form onSubmit={inviaRsvp}>
+              <fieldset>
+                <legend>Parteciperete?</legend>
+                <label className={styles.radio}><input type="radio" name="partecipazione" value="si" required /><span>Sì, con gioia</span></label>
+                <label className={styles.radio}><input type="radio" name="partecipazione" value="no" required /><span>Purtroppo no</span></label>
+              </fieldset>
+              <label className={styles.field}>Nome e cognome degli invitati
+                <input name="nomi" required placeholder="Es. Maria e Luca Rossi" />
+              </label>
+              <label className={styles.field}>Numero di partecipanti
+                <input name="partecipanti" type="number" min="1" max="12" defaultValue="1" required />
+              </label>
+              <label className={styles.field}>Allergie o intolleranze
+                <textarea name="allergie" placeholder="Indicate nomi e necessità alimentari" />
+              </label>
+              <label className={styles.field}>Necessità particolari
+                <textarea name="necessita" placeholder="Accessibilità, seggiolone o altre attenzioni" />
+              </label>
+              <button className={styles.submit} type="submit">Invia la risposta</button>
+              <small>Questa è una demo: la risposta resta salvata solo su questo dispositivo.</small>
+            </form>
+          )}
+        </div>
+      </section>
+
       <section id="album" className={styles.album}>
         <div className={styles.albumCard}>
           <div className={styles.cameraIcon} aria-hidden="true">
@@ -256,46 +296,6 @@ export default function InvitoPage() {
             <button className={styles.albumSubmit} type="submit">Carica i ricordi</button>
             {albumMessage && <p className={styles.albumMessage} role="status">{albumMessage}</p>}
           </form>
-        </div>
-      </section>
-
-      <section id="rsvp" className={styles.rsvp}>
-        <div className={styles.rsvpCard}>
-          <div className={styles.sectionHeading}>
-            <span>04</span><p>RÉPONDEZ S&apos;IL VOUS PLAÎT</p>
-            <h2>Ci sarete?</h2>
-          </div>
-          <p className={styles.rsvpIntro}>Vi chiediamo di confermare la vostra presenza compilando questo breve modulo.</p>
-
-          {inviato ? (
-            <div className={styles.success} role="status">
-              <span>✓</span><h3>Grazie!</h3>
-              <p>La risposta è stata salvata su questo dispositivo per la demo.</p>
-              <button type="button" onClick={() => setInviato(false)}>Invia un’altra risposta</button>
-            </div>
-          ) : (
-            <form onSubmit={inviaRsvp}>
-              <fieldset>
-                <legend>Parteciperete?</legend>
-                <label className={styles.radio}><input type="radio" name="partecipazione" value="si" required /><span>Sì, con gioia</span></label>
-                <label className={styles.radio}><input type="radio" name="partecipazione" value="no" required /><span>Purtroppo no</span></label>
-              </fieldset>
-              <label className={styles.field}>Nome e cognome degli invitati
-                <input name="nomi" required placeholder="Es. Maria e Luca Rossi" />
-              </label>
-              <label className={styles.field}>Numero di partecipanti
-                <input name="partecipanti" type="number" min="1" max="12" defaultValue="1" required />
-              </label>
-              <label className={styles.field}>Allergie o intolleranze
-                <textarea name="allergie" placeholder="Indicate nomi e necessità alimentari" />
-              </label>
-              <label className={styles.field}>Necessità particolari
-                <textarea name="necessita" placeholder="Accessibilità, seggiolone o altre attenzioni" />
-              </label>
-              <button className={styles.submit} type="submit">Invia la risposta</button>
-              <small>Questa è una demo: la risposta resta salvata solo su questo dispositivo.</small>
-            </form>
-          )}
         </div>
       </section>
 

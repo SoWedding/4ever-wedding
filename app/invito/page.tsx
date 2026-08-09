@@ -19,10 +19,10 @@ const INVITO = {
   },
   ricevimento: {
     ora: "18:00",
-    luogo: "Pizzeria Moromare Foce",
-    indirizzo: "Corso Guglielmo Marconi 76R, Genova",
+    luogo: "Femme Restaurant",
+    indirizzo: "Via Cesare Battisti 58, 18016 San Bartolomeo al Mare (IM)",
     mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Pizzeria%20Moromare%20Foce%2C%20Corso%20Guglielmo%20Marconi%2076R%2C%20Genova",
+      "https://www.google.com/maps/search/?api=1&query=Femme%20Restaurant%2C%20Via%20Cesare%20Battisti%2058%2C%2018016%20San%20Bartolomeo%20al%20Mare%20IM",
   },
 };
 

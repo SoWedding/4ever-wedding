@@ -19,10 +19,10 @@ const INVITO = {
   },
   ricevimento: {
     ora: "18:00",
-    luogo: "Femme Restaurant",
-    indirizzo: "Via Cesare Battisti 58, 18016 San Bartolomeo al Mare (IM)",
+    luogo: "Femme Wedding Venue",
+    indirizzo: "Via Cesare Battisti 58/5, 18016 San Bartolomeo al Mare (IM)",
     mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Femme%20Restaurant%2C%20Via%20Cesare%20Battisti%2058%2C%2018016%20San%20Bartolomeo%20al%20Mare%20IM",
+      "https://www.google.com/maps/search/?api=1&query=Femme%20Wedding%20Venue%2C%20Via%20Cesare%20Battisti%2058%2F5%2C%2018016%20San%20Bartolomeo%20al%20Mare%20IM",
   },
 };
 

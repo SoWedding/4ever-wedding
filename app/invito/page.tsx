@@ -12,10 +12,10 @@ const INVITO = {
     "Ci siamo incontrati quasi per caso, abbiamo scelto di camminare insieme e oggi desideriamo festeggiare con le persone che rendono la nostra storia ancora più bella.",
   cerimonia: {
     ora: "16:00",
-    luogo: "Chiesa di San Giovanni Bosco e San Gaetano",
-    indirizzo: "Via Carlo Rolando 15, Genova",
+    luogo: "Santuario Nostra Signora della Rovere",
+    indirizzo: "Piazza Rovere 4, San Bartolomeo al Mare (IM)",
     mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Chiesa%20di%20San%20Giovanni%20Bosco%20e%20San%20Gaetano%2C%20Via%20Carlo%20Rolando%2015%2C%20Genova",
+      "https://www.google.com/maps/search/?api=1&query=Santuario%20Nostra%20Signora%20della%20Rovere%2C%20Piazza%20Rovere%204%2C%20San%20Bartolomeo%20al%20Mare%20IM",
   },
   ricevimento: {
     ora: "18:00",

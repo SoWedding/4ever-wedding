@@ -5,8 +5,8 @@ import styles from "./invito.module.css";
 
 const INVITO = {
   nomi: "Giada & Francesco",
-  data: "2027-06-12T16:00:00",
-  dataEstesa: "12 giugno 2027",
+  data: "2027-06-04T16:00:00",
+  dataEstesa: "4 giugno 2027",
   frase: "Con gioia vi invitiamo a condividere con noi il giorno in cui diremo sì.",
   storia:
     "Ci siamo incontrati quasi per caso, abbiamo scelto di camminare insieme e oggi desideriamo festeggiare con le persone che rendono la nostra storia ancora più bella.",

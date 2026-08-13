@@ -5,20 +5,20 @@ import styles from "./invito.module.css";
 
 const INVITO = {
   nomi: "Giada & Francesco",
-  data: "2027-06-04T16:00:00",
+  data: "2027-06-04T15:30:00",
   dataEstesa: "4 giugno 2027",
   frase: "Con gioia vi invitiamo a condividere con noi il giorno in cui diremo sì.",
   storia:
     "Ci siamo incontrati quasi per caso, abbiamo scelto di camminare insieme e oggi desideriamo festeggiare con le persone che rendono la nostra storia ancora più bella.",
   cerimonia: {
-    ora: "16:00",
+    ora: "15:30",
     luogo: "Santuario Nostra Signora della Rovere",
     indirizzo: "Piazza Rovere 4, San Bartolomeo al Mare (IM)",
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Santuario%20Nostra%20Signora%20della%20Rovere%2C%20Piazza%20Rovere%204%2C%20San%20Bartolomeo%20al%20Mare%20IM",
   },
   ricevimento: {
-    ora: "18:00",
+    ora: "17:00",
     luogo: "Femme Wedding Venue",
     indirizzo: "Via Cesare Battisti 58/5, 18016 San Bartolomeo al Mare (IM)",
     mapsUrl:

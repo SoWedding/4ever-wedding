@@ -15,7 +15,7 @@ Per fermare la demo, torna nel Terminale e premi `Control + C`.
 
 ## Cosa include
 
-- Dashboard della coppia e countdown al 12 giugno 2027
+- Dashboard della coppia e countdown al 4 giugno 2027
 - Checklist interattiva con filtri e nuove attività
 - Budget, riepilogo e categorie di spesa
 - Lista invitati con conferme modificabili

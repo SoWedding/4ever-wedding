@@ -15,7 +15,8 @@ test("keeps the public invite complete and separate", async () => {
   assert.ok(page.indexOf('id="rsvp"') < page.indexOf('id="album"'));
   assert.match(page, /setInterval\(aggiorna, 1000\)/);
   assert.match(page, /giada-francesco-storia-01\.jpeg/);
-  assert.match(page, /localStorage\.setItem\("invito-giada-francesco-rsvp"/);
+  assert.match(page, /fetch\("\/api\/rsvp"/);
+  assert.match(page, /name="privacyConsent" required/);
 });
 
 test("keeps Maps links and album uploads safe for the demo", async () => {
@@ -29,7 +30,7 @@ test("keeps Maps links and album uploads safe for the demo", async () => {
   assert.match(page, /URL\.createObjectURL\(file\)/);
   assert.match(page, /removeAlbumFile/);
   assert.match(page, /i file non sono stati inviati né salvati/i);
-  assert.doesNotMatch(page, /fetch\(|XMLHttpRequest|FormData\([^)]*album/i);
+  assert.doesNotMatch(page, /\/api\/album|\bBUCKET\b|\bR2\b/);
 });
 
 test("provides a responsive invite layout", async () => {

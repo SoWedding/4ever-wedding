@@ -45,6 +45,7 @@ export default function InvitoPage() {
   const [albumFiles, setAlbumFiles] = useState<AlbumFile[]>([]);
   const [albumMessage, setAlbumMessage] = useState("");
   const [bustaAperta, setBustaAperta] = useState(false);
+  const [bustaInApertura, setBustaInApertura] = useState(false);
 
   useEffect(() => {
     const aggiorna = () => setCountdown(getCountdown());
@@ -56,8 +57,35 @@ export default function InvitoPage() {
     };
   }, []);
 
-  function apriBusta() {
-    setBustaAperta(true);
+  function apriBusta(event: React.MouseEvent<HTMLButtonElement>) {
+    if (bustaInApertura) return;
+    setBustaInApertura(true);
+
+    const overlay = event.currentTarget.closest('[data-envelope-overlay]') as HTMLElement | null;
+    const envelope = overlay?.querySelector('[data-envelope]') as HTMLElement | null;
+    const flap = overlay?.querySelector('[data-envelope-flap]') as HTMLElement | null;
+    const letter = overlay?.querySelector('[data-envelope-letter]') as HTMLElement | null;
+    const seal = overlay?.querySelector('[data-envelope-seal]') as HTMLElement | null;
+    const hint = overlay?.querySelector('[data-envelope-hint]') as HTMLElement | null;
+
+    if (envelope) envelope.style.transform = "scale(.985)";
+    if (flap) flap.style.transform = "rotateX(165deg)";
+    if (letter) letter.style.transform = "translateY(-36%)";
+    if (seal) {
+      seal.style.opacity = "0";
+      seal.style.transform = "translate(-50%,-50%) scale(.7)";
+    }
+    if (hint) hint.style.opacity = "0";
+
+    window.setTimeout(() => {
+      if (overlay) {
+        overlay.style.transition = "opacity .7s ease";
+        overlay.style.opacity = "0";
+        overlay.style.pointerEvents = "none";
+      }
+    }, 950);
+
+    window.setTimeout(() => setBustaAperta(true), 1650);
   }
 
   function inviaRsvp(event: FormEvent<HTMLFormElement>) {
@@ -103,22 +131,22 @@ export default function InvitoPage() {
   return (
     <main className={styles.invito}>
       {!bustaAperta && (
-        <div className={styles.envelopeOverlay} role="dialog" aria-modal="true" aria-label="Apri l'invito">
+        <div data-envelope-overlay className={styles.envelopeOverlay} role="dialog" aria-modal="true" aria-label="Apri l'invito">
           <div className={styles.envelopeIntro}>
             <p className={styles.envelopeEyebrow}>IL NOSTRO GIORNO</p>
             <h2>Francesco &amp; Giada</h2>
             <p className={styles.envelopeDate}>4 giugno 2027</p>
 
-            <button className={styles.envelopeButton} type="button" onClick={apriBusta} aria-label="Apri la busta e scopri l'invito">
-              <span className={styles.envelope} aria-hidden="true">
+            <button className={styles.envelopeButton} type="button" onClick={apriBusta} disabled={bustaInApertura} aria-label="Apri la busta e scopri l'invito">
+              <span data-envelope className={styles.envelope} aria-hidden="true">
                 <span className={styles.envelopeBack} />
-                <span className={styles.envelopeLetter}>Francesco <b>&amp;</b> Giada</span>
-                <span className={styles.envelopeFlap} />
-                <span className={styles.envelopeSeal}>✦</span>
+                <span data-envelope-letter className={styles.envelopeLetter}>Francesco <b>&amp;</b> Giada</span>
+                <span data-envelope-flap className={styles.envelopeFlap} />
+                <span data-envelope-seal className={styles.envelopeSeal}>✦</span>
               </span>
             </button>
 
-            <p className={styles.envelopeHint}>Tocca la busta per aprire il nostro invito</p>
+            <p data-envelope-hint className={styles.envelopeHint}>Tocca la busta per aprire il nostro invito</p>
           </div>
         </div>
       )}

@@ -44,6 +44,7 @@ export default function InvitoPage() {
   const [inviato, setInviato] = useState(false);
   const [albumFiles, setAlbumFiles] = useState<AlbumFile[]>([]);
   const [albumMessage, setAlbumMessage] = useState("");
+  const [bustaAperta, setBustaAperta] = useState(false);
 
   useEffect(() => {
     const aggiorna = () => setCountdown(getCountdown());
@@ -54,6 +55,10 @@ export default function InvitoPage() {
       window.clearInterval(timer);
     };
   }, []);
+
+  function apriBusta() {
+    setBustaAperta(true);
+  }
 
   function inviaRsvp(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -90,8 +95,6 @@ export default function InvitoPage() {
       return;
     }
 
-    // Nella versione definitiva questo sarà l'unico punto da collegare
-    // al servizio di archiviazione protetto e alla relativa API di upload.
     setAlbumMessage(
       "Modalità demo: i file non sono stati inviati né salvati. Il salvataggio online sicuro verrà attivato nella versione definitiva."
     );
@@ -99,6 +102,27 @@ export default function InvitoPage() {
 
   return (
     <main className={styles.invito}>
+      {!bustaAperta && (
+        <div className={styles.envelopeOverlay} role="dialog" aria-modal="true" aria-label="Apri l'invito">
+          <div className={styles.envelopeIntro}>
+            <p className={styles.envelopeEyebrow}>IL NOSTRO GIORNO</p>
+            <h2>Francesco &amp; Giada</h2>
+            <p className={styles.envelopeDate}>4 giugno 2027</p>
+
+            <button className={styles.envelopeButton} type="button" onClick={apriBusta} aria-label="Apri la busta e scopri l'invito">
+              <span className={styles.envelope} aria-hidden="true">
+                <span className={styles.envelopeBack} />
+                <span className={styles.envelopeLetter}>Francesco <b>&amp;</b> Giada</span>
+                <span className={styles.envelopeFlap} />
+                <span className={styles.envelopeSeal}>✦</span>
+              </span>
+            </button>
+
+            <p className={styles.envelopeHint}>Tocca la busta per aprire il nostro invito</p>
+          </div>
+        </div>
+      )}
+
       <nav className={styles.nav} aria-label="Sezioni dell'invito">
         <a href="#home" className={styles.logo}>G <span>&</span> F</a>
         <div>

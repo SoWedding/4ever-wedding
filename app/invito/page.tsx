@@ -218,11 +218,7 @@ export default function InvitoPage() {
             <div>
               <p>CERIMONIA</p>
               <h3>{INVITO.cerimonia.luogo}</h3>
-              <address>
-                <a className={styles.addressLink} href={INVITO.cerimonia.mapsUrl} target="_blank" rel="noopener noreferrer">
-                  {INVITO.cerimonia.indirizzo} <span aria-hidden="true">↗</span>
-                </a>
-              </address>
+              <address><a className={styles.addressLink} href={INVITO.cerimonia.mapsUrl} target="_blank" rel="noopener noreferrer">{INVITO.cerimonia.indirizzo} <span aria-hidden="true">↗</span></a></address>
             </div>
           </article>
           <article>
@@ -231,11 +227,7 @@ export default function InvitoPage() {
             <div>
               <p>RICEVIMENTO</p>
               <h3>{INVITO.ricevimento.luogo}</h3>
-              <address>
-                <a className={styles.addressLink} href={INVITO.ricevimento.mapsUrl} target="_blank" rel="noopener noreferrer">
-                  {INVITO.ricevimento.indirizzo} <span aria-hidden="true">↗</span>
-                </a>
-              </address>
+              <address><a className={styles.addressLink} href={INVITO.ricevimento.mapsUrl} target="_blank" rel="noopener noreferrer">{INVITO.ricevimento.indirizzo} <span aria-hidden="true">↗</span></a></address>
             </div>
           </article>
         </div>
@@ -248,33 +240,17 @@ export default function InvitoPage() {
             <span>04</span><p>RÉPONDEZ S&apos;IL VOUS PLAÎT</p>
             <h2>Ci sarete?</h2>
           </div>
-          <p className={styles.rsvpIntro}>Vi chiediamo di confermare la vostra presenza compilando questo breve modulo.</p>
+          <p className={styles.rsvpIntro}>Vi chiediamo di confermare la vostra presenza entro il <strong>4 maggio</strong> 2027 compilando questo breve modulo.</p>
 
           {inviato ? (
-            <div className={styles.success} role="status">
-              <span>✓</span><h3>Grazie!</h3>
-              <p>La risposta è stata salvata su questo dispositivo per la demo.</p>
-              <button type="button" onClick={() => setInviato(false)}>Invia un’altra risposta</button>
-            </div>
+            <div className={styles.success} role="status"><span>✓</span><h3>Grazie!</h3><p>La risposta è stata salvata su questo dispositivo per la demo.</p><button type="button" onClick={() => setInviato(false)}>Invia un’altra risposta</button></div>
           ) : (
             <form onSubmit={inviaRsvp}>
-              <fieldset>
-                <legend>Parteciperete?</legend>
-                <label className={styles.radio}><input type="radio" name="partecipazione" value="si" required /><span>Sì, con gioia</span></label>
-                <label className={styles.radio}><input type="radio" name="partecipazione" value="no" required /><span>Purtroppo no</span></label>
-              </fieldset>
-              <label className={styles.field}>Nome e cognome degli invitati
-                <input name="nomi" required placeholder="Es. Maria e Luca Rossi" />
-              </label>
-              <label className={styles.field}>Numero di partecipanti
-                <input name="partecipanti" type="number" min="1" max="12" defaultValue="1" required />
-              </label>
-              <label className={styles.field}>Allergie o intolleranze
-                <textarea name="allergie" placeholder="Indicate nomi e necessità alimentari" />
-              </label>
-              <label className={styles.field}>Necessità particolari
-                <textarea name="necessita" placeholder="Accessibilità, seggiolone o altre attenzioni" />
-              </label>
+              <fieldset><legend>Parteciperete?</legend><label className={styles.radio}><input type="radio" name="partecipazione" value="si" required /><span>Sì, con gioia</span></label><label className={styles.radio}><input type="radio" name="partecipazione" value="no" required /><span>Purtroppo no</span></label></fieldset>
+              <label className={styles.field}>Nome e cognome degli invitati<input name="nomi" required placeholder="Es. Maria e Luca Rossi" /></label>
+              <label className={styles.field}>Numero di partecipanti<input name="partecipanti" type="number" min="1" max="12" defaultValue="1" required /></label>
+              <label className={styles.field}>Allergie o intolleranze<textarea name="allergie" placeholder="Indicate nomi e necessità alimentari" /></label>
+              <label className={styles.field}>Necessità particolari<textarea name="necessita" placeholder="Accessibilità, seggiolone o altre attenzioni" /></label>
               <button className={styles.submit} type="submit">Invia la risposta</button>
               <small>Questa è una demo: la risposta resta salvata solo su questo dispositivo.</small>
             </form>
@@ -284,71 +260,21 @@ export default function InvitoPage() {
 
       <section id="album" className={styles.album}>
         <div className={styles.albumCard}>
-          <div className={styles.cameraIcon} aria-hidden="true">
-            <span />
-            <i />
-          </div>
-          <div className={styles.sectionHeading}>
-            <span>03</span><p>I VOSTRI RICORDI</p>
-            <h2>Il nostro album condiviso</h2>
-          </div>
-          <p className={styles.albumIntro}>
-            Aiutateci a custodire ogni istante di questo giorno. Caricate qui le fotografie e i video che realizzerete e contribuite a creare il nostro album di ricordi.
-          </p>
-
+          <div className={styles.cameraIcon} aria-hidden="true"><span /><i /></div>
+          <div className={styles.sectionHeading}><span>03</span><p>I VOSTRI RICORDI</p><h2>Il nostro album condiviso</h2></div>
+          <p className={styles.albumIntro}>Aiutateci a custodire ogni istante di questo giorno. Caricate qui le fotografie e i video che realizzerete e contribuite a creare il nostro album di ricordi.</p>
           <form className={styles.albumForm} onSubmit={submitAlbumDemo}>
-            <div className={styles.fileChooser}>
-              <input
-                id="album-files"
-                className={styles.srOnly}
-                type="file"
-                accept="image/*,video/*"
-                multiple
-                onChange={selectAlbumFiles}
-              />
-              <label htmlFor="album-files">Scegli foto e video</label>
-              <small>Potete selezionare più immagini e video insieme.</small>
-            </div>
-
-            {albumFiles.length > 0 && (
-              <div className={styles.fileList} aria-live="polite">
-                <h3>File selezionati</h3>
-                {albumFiles.map(item => (
-                  <article key={item.id} className={styles.filePreview}>
-                    {item.file.type.startsWith("image/") ? (
-                      <img src={item.previewUrl} alt="" />
-                    ) : (
-                      <video src={item.previewUrl} muted preload="metadata" aria-label={`Anteprima di ${item.file.name}`} />
-                    )}
-                    <div>
-                      <strong>{item.file.name}</strong>
-                      <small>{item.file.type.startsWith("video/") ? "Video" : "Fotografia"} · {(item.file.size / 1048576).toFixed(1)} MB</small>
-                    </div>
-                    <button type="button" onClick={() => removeAlbumFile(item.id)} aria-label={`Rimuovi ${item.file.name}`}>×</button>
-                  </article>
-                ))}
-              </div>
-            )}
-
-            <label className={styles.albumField}>
-              Nome di chi condivide <em>facoltativo</em>
-              <input name="uploaderName" autoComplete="name" placeholder="Il vostro nome" />
-            </label>
-
-            <label className={styles.albumConsent}>
-              <input type="checkbox" name="consent" required />
-              <span>Acconsento al caricamento e al trattamento delle fotografie e dei video selezionati per l’album privato degli sposi.</span>
-            </label>
-
-            <button className={styles.albumSubmit} type="submit">Carica i ricordi</button>
+            <div className={styles.fileChooser}><input id="album-files" className={styles.srOnly} type="file" accept="image/*,video/*" multiple onChange={selectAlbumFiles} /><label htmlFor="album-files">Scegli foto e video</label><small>Potete selezionare più immagini e video insieme.</small></div>
+            {albumFiles.length > 0 && <div className={styles.fileList} aria-live="polite"><h3>File selezionati</h3>{albumFiles.map(item => <article key={item.id} className={styles.filePreview}>{item.file.type.startsWith("image/") ? <img src={item.previewUrl} alt="" /> : <video src={item.previewUrl} muted preload="metadata" aria-label={`Anteprima di ${item.file.name}`} />}<div><strong>{item.file.name}</strong><small>{(item.file.size / 1024 / 1024).toFixed(1)} MB</small></div><button type="button" onClick={() => removeAlbumFile(item.id)} aria-label={`Rimuovi ${item.file.name}`}>×</button></article>)}</div>}
+            <label className={styles.field}>Il vostro nome <span>(facoltativo)</span><input name="autore" placeholder="Es. Maria e Luca" /></label>
+            <label className={styles.consent}><input type="checkbox" name="consenso" required /><span>Confermo di voler condividere questi contenuti con gli sposi per il loro album privato.</span></label>
+            <button className={styles.albumSubmit} type="submit" disabled={albumFiles.length === 0}>Carica i ricordi</button>
             {albumMessage && <p className={styles.albumMessage} role="status">{albumMessage}</p>}
           </form>
         </div>
       </section>
 
-      <footer>
-        <p>{INVITO.nomi}</p><span>{INVITO.dataEstesa}</span>
-      </footer>
+      <footer><span>G <i>&</i> F</span><p>4 · 06 · 2027</p><small>Con amore, Giada & Francesco</small></footer>
     </main>
   );
 }

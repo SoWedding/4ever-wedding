@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import RsvpSync from "./rsvp-sync";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -23,5 +24,5 @@ export async function generateMetadata(): Promise<Metadata> {
 export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover", themeColor: "#6d7762" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="it"><body>{children}</body></html>;
+  return <html lang="it"><body><RsvpSync />{children}</body></html>;
 }

@@ -52,9 +52,40 @@ function mergeResponses(data: Record<string, unknown>, responses: Rsvp[]) {
         guests = guests.map(item => keyOf(item) === personKey ? { ...item, needs: { ...item.needs, notes: `${item.needs?.notes ? `${item.needs.notes} · ` : ""}RSVP da verificare: omonimo rilevato` } } : item);
       }
     });
-    processed.add(response.id); changed = true;
+    processed.add(response.id);
+    changed = true;
   }
   return changed ? { ...data, guests, processedRsvpIds: [...processed] } : null;
+}
+
+async function loadBaseData() {
+  const shareCode = localStorage.getItem("4ever-shared-code");
+  if (shareCode) {
+    const cloudResponse = await fetch("/api/shared-wedding", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ action: "load", code: shareCode }),
+    });
+    if (cloudResponse.ok) {
+      const cloud = await cloudResponse.json() as { data?: Record<string, unknown> };
+      if (cloud.data) return { data: cloud.data, shareCode };
+    }
+  }
+
+  const saved = localStorage.getItem("4ever-demo");
+  if (!saved) return null;
+  return { data: JSON.parse(saved) as Record<string, unknown>, shareCode: null as string | null };
+}
+
+async function persistMerged(data: Record<string, unknown>, shareCode: string | null) {
+  localStorage.setItem("4ever-demo", JSON.stringify(data));
+  if (!shareCode) return;
+  const cloudResponse = await fetch("/api/shared-wedding", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ action: "save", code: shareCode, data }),
+  });
+  if (!cloudResponse.ok) throw new Error("Salvataggio RSVP nel cloud non riuscito");
 }
 
 export default function RsvpSync() {
@@ -66,12 +97,12 @@ export default function RsvpSync() {
         const response = await fetch("/api/rsvp?event=giada-francesco", { cache: "no-store" });
         if (!response.ok || stopped) return;
         const result = await response.json() as { responses?: Rsvp[] };
-        const saved = localStorage.getItem("4ever-demo");
-        if (!saved) return;
-        const data = JSON.parse(saved) as Record<string, unknown>;
-        const merged = mergeResponses(data, result.responses || []);
+        const base = await loadBaseData();
+        if (!base || stopped) return;
+        const merged = mergeResponses(base.data, result.responses || []);
         if (merged) {
-          localStorage.setItem("4ever-demo", JSON.stringify(merged));
+          await persistMerged(merged, base.shareCode);
+          if (stopped) return;
           sessionStorage.setItem("rsvp-sync-reload", "1");
           window.location.reload();
         }

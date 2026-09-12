@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import styles from "./invito.module.css";
 
 const INVITO = {
-  nomi: "Giada & Francesco",
+  nomi: "Francesco & Giada",
   data: "2027-06-04T15:30:00",
   dataEstesa: "4 giugno 2027",
   frase: "Con gioia vi invitiamo a condividere con noi il giorno in cui diremo sì.",
@@ -152,7 +152,7 @@ export default function InvitoPage() {
       )}
 
       <nav className={styles.nav} aria-label="Sezioni dell'invito">
-        <a href="#home" className={styles.logo}>G <span>&</span> F</a>
+        <a href="#home" className={styles.logo}>F <span>&</span> G</a>
         <div>
           <a href="#storia">La nostra storia</a>
           <a href="#programma">Programma</a>
@@ -191,7 +191,7 @@ export default function InvitoPage() {
           <figure className={styles.photoLarge}>
             <img
               src="/invito/giada-francesco-storia-01.jpeg"
-              alt="Giada e Francesco insieme durante un volo in elicottero"
+              alt="Francesco e Giada insieme durante un volo in elicottero"
               width="1193"
               height="1600"
             />
@@ -274,7 +274,7 @@ export default function InvitoPage() {
         </div>
       </section>
 
-      <footer><span>G <i>&</i> F</span><p>4 · 06 · 2027</p><small>Con amore, Giada & Francesco</small></footer>
+      <footer><span>F <i>&</i> G</span><p>4 · 06 · 2027</p><small>Con amore, Francesco & Giada</small></footer>
     </main>
   );
 }

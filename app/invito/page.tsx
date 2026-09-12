@@ -157,6 +157,7 @@ export default function InvitoPage() {
           <a href="#storia">La nostra storia</a>
           <a href="#programma">Programma</a>
           <a href="#album">Album</a>
+          <a href="#viaggio">Lista nozze</a>
           <a href="#rsvp">RSVP</a>
         </div>
       </nav>
@@ -271,6 +272,61 @@ export default function InvitoPage() {
             <button className={styles.albumSubmit} type="submit" disabled={albumFiles.length === 0}>Carica i ricordi</button>
             {albumMessage && <p className={styles.albumMessage} role="status">{albumMessage}</p>}
           </form>
+        </div>
+      </section>
+
+      <section
+        id="viaggio"
+        style={{
+          padding: "clamp(80px, 10vw, 140px) clamp(22px, 8vw, 120px)",
+          background: "linear-gradient(150deg, #fbf8ef, #f8f2df)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div aria-hidden="true" style={{ position: "absolute", width: 170, height: 170, borderRadius: "50%", background: "rgba(143,174,193,.16)", right: "-45px", top: 50 }} />
+        <div aria-hidden="true" style={{ position: "absolute", width: 100, height: 68, borderRadius: "55% 45% 55% 45%", background: "rgba(239,216,132,.55)", left: "4vw", bottom: "9%", transform: "rotate(-18deg)" }} />
+
+        <div style={{ maxWidth: 980, margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <div className={styles.sectionHeading}>
+            <span>05</span><p>LISTA NOZZE</p>
+            <h2>Il viaggio dei nostri sogni</h2>
+          </div>
+
+          <div style={{ maxWidth: 790, margin: "0 auto", textAlign: "center" }}>
+            <div className={styles.logo} style={{ fontSize: 26, marginBottom: 24 }}>F <span>&amp;</span> G</div>
+            <p style={{ margin: "0 auto 12px", fontSize: "clamp(22px, 3vw, 30px)", lineHeight: 1.5, color: "#526f82" }}>
+              Il regalo più bello sarà avervi con noi.
+            </p>
+            <p style={{ margin: "0 auto 34px", maxWidth: 700, fontSize: "clamp(18px, 2.3vw, 23px)", lineHeight: 1.6, color: "#6f7775" }}>
+              Se desiderate contribuire a realizzare il viaggio che sogniamo, potrete accompagnarci anche in questa nuova avventura.
+            </p>
+
+            <div style={{ background: "rgba(255,255,255,.76)", border: "1px solid rgba(82,111,130,.18)", borderRadius: 28, padding: "clamp(26px, 5vw, 46px)", boxShadow: "0 20px 60px rgba(57,75,79,.08)", textAlign: "left" }}>
+              <div style={{ display: "grid", gap: 18 }}>
+                <div><small style={{ display: "block", fontFamily: "Arial, sans-serif", fontSize: 10, letterSpacing: 2.2, color: "#a18622", marginBottom: 5 }}>INTESTATARIO</small><strong style={{ fontSize: 22, color: "#526f82" }}>DA INSERIRE</strong></div>
+                <div><small style={{ display: "block", fontFamily: "Arial, sans-serif", fontSize: 10, letterSpacing: 2.2, color: "#a18622", marginBottom: 5 }}>IBAN</small><strong style={{ fontSize: "clamp(17px, 2.5vw, 22px)", color: "#526f82", overflowWrap: "anywhere" }}>IT00 X000 0000 0000 0000 0000 000</strong></div>
+                <div><small style={{ display: "block", fontFamily: "Arial, sans-serif", fontSize: 10, letterSpacing: 2.2, color: "#a18622", marginBottom: 5 }}>BANCA</small><strong style={{ fontSize: 20, color: "#526f82" }}>FACOLTATIVA - DA INSERIRE</strong></div>
+                <div><small style={{ display: "block", fontFamily: "Arial, sans-serif", fontSize: 10, letterSpacing: 2.2, color: "#a18622", marginBottom: 5 }}>BIC / SWIFT</small><span style={{ fontSize: 18, color: "#6f7775" }}>Solo se utile per bonifici dall’estero</span></div>
+              </div>
+
+              <div style={{ height: 1, background: "rgba(82,111,130,.18)", margin: "30px 0" }} />
+
+              <small style={{ display: "block", fontFamily: "Arial, sans-serif", fontSize: 10, letterSpacing: 2.2, color: "#a18622", marginBottom: 8 }}>CAUSALE CONSIGLIATA</small>
+              <p style={{ margin: 0, fontSize: "clamp(19px, 2.5vw, 24px)", lineHeight: 1.5, color: "#526f82" }}>
+                Regalo di nozze Francesco e Giada –<br />Nome e cognome dell’invitato (o famiglia)
+              </p>
+            </div>
+
+            <p style={{ margin: "34px auto 8px", fontSize: "clamp(21px, 3vw, 28px)", fontStyle: "italic", color: "#526f82" }}>
+              La meta? Per ora resta uno dei sogni ancora da scegliere…
+            </p>
+            <p style={{ margin: 0, fontSize: 18, lineHeight: 1.55, color: "#6f7775" }}>
+              La aggiungeremo appena il viaggio avrà trovato la sua destinazione.
+            </p>
+            <div className={styles.divider} style={{ margin: "26px 0 20px" }}><span>✦</span></div>
+            <p style={{ margin: 0, fontSize: 21, color: "#526f82" }}>Grazie per essere parte della nostra storia</p>
+          </div>
         </div>
       </section>
 

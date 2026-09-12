@@ -28,6 +28,7 @@ const INVITO = {
 
 type Countdown = { giorni: number; ore: number; minuti: number; secondi: number };
 type AlbumFile = { id: string; file: File; previewUrl: string };
+type Partecipazione = "si" | "no" | "";
 
 function getCountdown(): Countdown {
   const distanza = Math.max(0, new Date(INVITO.data).getTime() - Date.now());
@@ -42,6 +43,8 @@ function getCountdown(): Countdown {
 export default function InvitoPage() {
   const [countdown, setCountdown] = useState<Countdown | null>(null);
   const [inviato, setInviato] = useState(false);
+  const [partecipazione, setPartecipazione] = useState<Partecipazione>("");
+  const [numeroPartecipanti, setNumeroPartecipanti] = useState(1);
   const [albumFiles, setAlbumFiles] = useState<AlbumFile[]>([]);
   const [albumMessage, setAlbumMessage] = useState("");
   const [bustaAperta, setBustaAperta] = useState(false);
@@ -90,10 +93,32 @@ export default function InvitoPage() {
 
   function inviaRsvp(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const dati = Object.fromEntries(new FormData(event.currentTarget).entries());
+    const formData = new FormData(event.currentTarget);
+
+    const dati = partecipazione === "si"
+      ? {
+          partecipazione: "si",
+          numeroPartecipanti,
+          partecipanti: Array.from({ length: numeroPartecipanti }, (_, index) => ({
+            nome: String(formData.get(`partecipante-${index}-nome`) ?? "").trim(),
+            allergie: String(formData.get(`partecipante-${index}-allergie`) ?? "Nessuna").trim() || "Nessuna",
+            necessita: String(formData.get(`partecipante-${index}-necessita`) ?? "Nessuna").trim() || "Nessuna",
+          })),
+        }
+      : {
+          partecipazione: "no",
+          rispondente: String(formData.get("rispondente") ?? "").trim(),
+        };
+
     localStorage.setItem("invito-giada-francesco-rsvp", JSON.stringify(dati));
     setInviato(true);
     event.currentTarget.reset();
+  }
+
+  function nuovaRisposta() {
+    setInviato(false);
+    setPartecipazione("");
+    setNumeroPartecipanti(1);
   }
 
   function selectAlbumFiles(event: React.ChangeEvent<HTMLInputElement>) {
@@ -244,15 +269,84 @@ export default function InvitoPage() {
           <p className={styles.rsvpIntro}>Vi chiediamo di confermare la vostra presenza entro il <strong>4 maggio</strong> 2027 compilando questo breve modulo.</p>
 
           {inviato ? (
-            <div className={styles.success} role="status"><span>✓</span><h3>Grazie!</h3><p>La risposta è stata salvata su questo dispositivo per la demo.</p><button type="button" onClick={() => setInviato(false)}>Invia un’altra risposta</button></div>
+            <div className={styles.success} role="status">
+              <span>✓</span><h3>Grazie!</h3>
+              <p>La risposta è stata salvata su questo dispositivo per la demo.</p>
+              <button type="button" onClick={nuovaRisposta}>Invia un’altra risposta</button>
+            </div>
           ) : (
             <form onSubmit={inviaRsvp}>
-              <fieldset><legend>Parteciperete?</legend><label className={styles.radio}><input type="radio" name="partecipazione" value="si" required /><span>Sì, con gioia</span></label><label className={styles.radio}><input type="radio" name="partecipazione" value="no" required /><span>Purtroppo no</span></label></fieldset>
-              <label className={styles.field}>Nome e cognome degli invitati<input name="nomi" required placeholder="Es. Maria e Luca Rossi" /></label>
-              <label className={styles.field}>Numero di partecipanti<input name="partecipanti" type="number" min="1" max="12" defaultValue="1" required /></label>
-              <label className={styles.field}>Allergie o intolleranze<textarea name="allergie" placeholder="Indicate nomi e necessità alimentari" /></label>
-              <label className={styles.field}>Necessità particolari<textarea name="necessita" placeholder="Accessibilità, seggiolone o altre attenzioni" /></label>
-              <button className={styles.submit} type="submit">Invia la risposta</button>
+              <fieldset>
+                <legend>Parteciperete?</legend>
+                <label className={styles.radio}>
+                  <input type="radio" name="partecipazione" value="si" required checked={partecipazione === "si"} onChange={() => setPartecipazione("si")} />
+                  <span>Sì, con gioia</span>
+                </label>
+                <label className={styles.radio}>
+                  <input type="radio" name="partecipazione" value="no" required checked={partecipazione === "no"} onChange={() => setPartecipazione("no")} />
+                  <span>Purtroppo no</span>
+                </label>
+              </fieldset>
+
+              {partecipazione === "no" && (
+                <label className={styles.field}>
+                  Nome e cognome di chi risponde
+                  <input name="rispondente" required placeholder="Es. Maria Rossi" autoComplete="name" />
+                </label>
+              )}
+
+              {partecipazione === "si" && (
+                <>
+                  <label className={styles.field}>
+                    Numero di partecipanti
+                    <input
+                      name="numeroPartecipanti"
+                      type="number"
+                      min="1"
+                      max="12"
+                      value={numeroPartecipanti}
+                      onChange={(event) => {
+                        const valore = Number(event.target.value);
+                        setNumeroPartecipanti(Math.min(12, Math.max(1, Number.isFinite(valore) ? valore : 1)));
+                      }}
+                      required
+                    />
+                  </label>
+
+                  <div style={{ display: "grid", gap: 18, margin: "22px 0 28px" }}>
+                    {Array.from({ length: numeroPartecipanti }, (_, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          padding: "22px",
+                          borderRadius: 22,
+                          border: "1px solid rgba(82,111,130,.18)",
+                          background: "rgba(255,255,255,.72)",
+                          boxShadow: "0 12px 34px rgba(57,75,79,.06)",
+                        }}
+                      >
+                        <p style={{ margin: "0 0 16px", color: "#526f82", fontWeight: 700, letterSpacing: ".04em" }}>
+                          Partecipante {index + 1}
+                        </p>
+                        <label className={styles.field}>
+                          Nome e cognome
+                          <input name={`partecipante-${index}-nome`} required placeholder="Es. Maria Rossi" autoComplete="name" />
+                        </label>
+                        <label className={styles.field}>
+                          Allergie o intolleranze
+                          <input name={`partecipante-${index}-allergie`} defaultValue="Nessuna" />
+                        </label>
+                        <label className={styles.field}>
+                          Necessità particolari
+                          <input name={`partecipante-${index}-necessita`} defaultValue="Nessuna" placeholder="Es. seggiolone, accessibilità" />
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              <button className={styles.submit} type="submit" disabled={!partecipazione}>Invia la risposta</button>
               <small>Questa è una demo: la risposta resta salvata solo su questo dispositivo.</small>
             </form>
           )}
